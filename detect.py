@@ -124,6 +124,7 @@ def main(_argv):
         if FLAGS.ocr:
             ocr(cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), pred_bbox)
 
+        """
         # if count flag is enabled, perform counting of objects
         if FLAGS.count:
             # count objects found
@@ -140,7 +141,7 @@ def main(_argv):
             image.show()
         image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         cv2.imwrite(FLAGS.output + 'detection' + str(count) + '.png', image)
-
+        """
 if __name__ == '__main__':
     try:
         app.run(main)

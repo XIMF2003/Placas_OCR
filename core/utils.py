@@ -12,6 +12,7 @@ import re
 # Example tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract'
 
 # function to recognize license plate numbers using Tesseract OCR
+"""
 def recognize_plate(img, coords):
     # separate coordinates from box
     xmin, ymin, xmax, ymax = coords
@@ -84,7 +85,7 @@ def recognize_plate(img, coords):
     #cv2.imshow("Character's Segmented", im2)
     #cv2.waitKey(0)
     return plate_num
-
+"""
 def load_freeze_layer(model='yolov4', tiny=False):
     if tiny:
         if model == 'yolov3':
@@ -159,21 +160,6 @@ def read_class_names(class_file_name):
             names[ID] = name.strip('\n')
     return names
 
-def load_config(FLAGS):
-    if FLAGS.tiny:
-        STRIDES = np.array(cfg.YOLO.STRIDES_TINY)
-        ANCHORS = get_anchors(cfg.YOLO.ANCHORS_TINY, FLAGS.tiny)
-        XYSCALE = cfg.YOLO.XYSCALE_TINY if FLAGS.model == 'yolov4' else [1, 1]
-    else:
-        STRIDES = np.array(cfg.YOLO.STRIDES)
-        if FLAGS.model == 'yolov4':
-            ANCHORS = get_anchors(cfg.YOLO.ANCHORS, FLAGS.tiny)
-        elif FLAGS.model == 'yolov3':
-            ANCHORS = get_anchors(cfg.YOLO.ANCHORS_V3, FLAGS.tiny)
-        XYSCALE = cfg.YOLO.XYSCALE if FLAGS.model == 'yolov4' else [1, 1, 1]
-    NUM_CLASS = len(read_class_names(cfg.YOLO.CLASSES))
-
-    return STRIDES, ANCHORS, NUM_CLASS, XYSCALE
 
 def get_anchors(anchors_path, tiny=False):
     anchors = np.array(anchors_path)
@@ -474,6 +460,7 @@ def freeze_all(model, frozen=True):
     if isinstance(model, tf.keras.Model):
         for l in model.layers:
             freeze_all(l, frozen)
+
 def unfreeze_all(model, frozen=False):
     model.trainable = not frozen
     if isinstance(model, tf.keras.Model):
